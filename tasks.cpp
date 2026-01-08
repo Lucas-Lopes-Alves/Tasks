@@ -44,6 +44,9 @@ int main(int argc, const char* argv[])
             content.erase(content.begin()+taskPosition);
             file.close();
             std::fstream file(path, std::ios::out);
+            for (string temporary : content) {
+                file << temporary << '\n';
+            }
             content.clear();
         } else if (action == "change") {
             string temporary;
