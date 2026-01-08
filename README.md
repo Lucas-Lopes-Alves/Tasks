@@ -1,2 +1,2 @@
 # Tasks
-A Linux terminal commands to organize tasks
+A Linux terminal command to organize tasks
