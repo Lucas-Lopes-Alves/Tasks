@@ -3,6 +3,7 @@ A Linux terminal command to organize daily tasks.
 
 
 ## Description
+
 Tasks is a simple Linux terminal command for managing daily tasks.
 ---
 
