@@ -8,7 +8,7 @@ using std::string, std::cin, std::cout;
 
 int main(int argc, const char* argv[])
 {
-    if (argc > 2) {
+    if (argc > 1) {
         string action{string(argv[1])};
         std::vector<string> content;
         const char* home{std::getenv("HOME")};
@@ -44,6 +44,31 @@ int main(int argc, const char* argv[])
             content.erase(content.begin()+taskPosition);
             file.close();
             std::fstream file(path, std::ios::out);
+            content.clear();
+        } else if (action == "change") {
+            string temporary;
+            while(std::getline(file, temporary)) {
+                content.push_back(temporary);
+            }
+            int option{std::stoi(string(argv[2]))};
+            content[option-1] = string(argv[3]);
+            file.close();
+
+            file.open(path, std::ios::out);
+            for (string vector : content) {
+                file << vector <<'\n';
+            }
+            content.clear();
+        } else if (action == "list") {
+            string temporary;
+            int taskPosition{};
+            while (std::getline(file, temporary)) {
+                cout << taskPosition+1 << ": " << temporary << '\n';
+                taskPosition++;
+            }
+            
+        } else {
+            return 1;
         }
     }
 }
