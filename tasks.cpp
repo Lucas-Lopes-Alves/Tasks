@@ -33,45 +33,76 @@ int main(int argc, const char* argv[])
         }
 
         if (action == "add") {
-            string task = string(argv[2]);
-            file << task <<'\n';
-        } else if (action == "remove") {
-            string temporary;
-            while(std::getline(file, temporary)) {
-                content.push_back(temporary);
-            }
-            int taskPosition{std::stoi(string(argv[2]))};
-            content.erase(content.begin()+taskPosition);
-            file.close();
-            std::fstream file(path, std::ios::out);
-            for (string temporary : content) {
-                file << temporary << '\n';
-            }
-            content.clear();
-        } else if (action == "change") {
-            string temporary;
-            while(std::getline(file, temporary)) {
-                content.push_back(temporary);
-            }
-            int option{std::stoi(string(argv[2]))};
-            content[option-1] = string(argv[3]);
-            file.close();
 
-            file.open(path, std::ios::out);
-            for (string vector : content) {
-                file << vector <<'\n';
+            if (argc < 3) {
+                std::cerr << "Error: missing arguments \n" << R"(Usage: task add "{task description}")" << '\n' ;
+                return 1;
+            } else {
+                string task = string(argv[2]);
+                file << task <<'\n';
             }
+            
+        } else if (action == "remove") {
+
+            if (argc < 3) {
+                std::cerr << "Error: missing arguments" << '\n' << R"(Usage: tasks remove {number})" << '\n';
+                return 1;
+            } else {
+                string temporary;
+                while(std::getline(file, temporary)) {
+                    content.push_back(temporary);
+                }
+
+                int taskPosition{std::stoi(string(argv[2]))};
+                content.erase(content.begin()+(taskPosition));
+                file.close();
+
+                std::fstream file(path, std::ios::out);
+                for (string temporary : content) {
+                    file << temporary << '\n';
+                }
+                content.clear();
+            }
+            
+        } else if (action == "change") {
+
+            if (argc < 4) {
+                std::cerr << "Error: missing arguments \n" << R"(Usage: tasks change {number} "{task}")" ;
+                return 1;
+            } else {
+                string temporary;
+                while(std::getline(file, temporary)) {
+                    content.push_back(temporary);
+                }
+
+                int option{std::stoi(string(argv[2]))};
+                content[option-1] = string(argv[3]);
+                file.close();
+
+                file.open(path, std::ios::out);
+                for (string vector : content) {
+                    file << vector <<'\n';
+                }
+
             content.clear();
+            }
+
         } else if (action == "list") {
+
             string temporary;
             int taskPosition{};
+
             while (std::getline(file, temporary)) {
                 cout << taskPosition+1 << ": " << temporary << '\n';
                 taskPosition++;
             }
             
-        } else {
-            return 1;
-        }
+        } 
+    } else {
+        std::cerr << "Error: missing arguments\n" << "use: tasks [COMMAND] [..OPTIONS] \n \n"
+        << "add                     adds a new task to the task file \n"
+        <<"change                     changes the task to another \n"
+        << "remove                     removes a task \n \n";
+        return 1;
     }
 }
