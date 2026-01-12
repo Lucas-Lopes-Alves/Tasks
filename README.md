@@ -33,3 +33,7 @@ Change a task based on its position on the file.
 
 Usage:
 - `task change 1 "new_task"`
+
+## License
+
+This project is for learning purposes only
