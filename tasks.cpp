@@ -48,20 +48,31 @@ int main(int argc, const char* argv[])
                 std::cerr << "Error: missing arguments" << '\n' << R"(Usage: tasks remove {number})" << '\n';
                 return 1;
             } else {
-                string temporary;
-                while(std::getline(file, temporary)) {
-                    content.push_back(temporary);
-                }
+                if (string(argv[2])== "--all"){
 
-                int taskPosition{std::stoi(string(argv[2]))};
-                content.erase(content.begin()+(taskPosition));
-                file.close();
+                    content.clear();
+                    for (string strings : content) {
+                        file << strings << '\n';
+                    }
 
-                std::fstream file(path, std::ios::out);
-                for (string temporary : content) {
-                    file << temporary << '\n';
+                    file.close();
+                    std::fstream file(path, std::ios::out);
+                } else {
+                    string temporary;
+                    while(std::getline(file, temporary)) {
+                        content.push_back(temporary);
+                    }
+
+                    int taskPosition{std::stoi(string(argv[2]))};
+                    content.erase(content.begin()+(taskPosition));
+                    file.close();
+
+                    std::fstream file(path, std::ios::out);
+                    for (string temporary : content) {
+                        file << temporary << '\n';
+                    }
+                    content.clear();
                 }
-                content.clear();
             }
             
         } else if (action == "change") {
