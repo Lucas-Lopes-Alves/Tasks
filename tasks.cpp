@@ -35,7 +35,8 @@ int main(int argc, const char* argv[])
         if (action == "add") {
 
             if (argc < 3) {
-                std::cerr << "Error: missing arguments \n" << R"(Usage: task add "{task description}")" << '\n' ;
+                std::cerr << "Error: missing arguments \n" 
+                << R"(Usage: task add "{task description}")" << '\n' ;
                 return 1;
             } else {
                 string task = string(argv[2]);
@@ -45,7 +46,8 @@ int main(int argc, const char* argv[])
         } else if (action == "remove") {
 
             if (argc < 3) {
-                std::cerr << "Error: missing arguments" << '\n' << R"(Usage: tasks remove {number})" << '\n';
+                std::cerr << "Error: missing arguments" << '\n' 
+                << R"(Usage: tasks remove {number})" << '\n';
                 return 1;
             } else {
                 if (string(argv[2])== "--all"){
@@ -64,6 +66,11 @@ int main(int argc, const char* argv[])
                     }
 
                     int taskPosition{std::stoi(string(argv[2]))};
+                    if (taskPosition - 1 <=-1 || taskPosition > content.size())
+                    {
+                        std::cerr << "Error: cannot change an inexistent task" << '\n';
+                        return 1;
+                    }
                     content.erase(content.begin()+(taskPosition));
                     file.close();
 
@@ -78,7 +85,8 @@ int main(int argc, const char* argv[])
         } else if (action == "change") {
 
             if (argc < 4) {
-                std::cerr << "Error: missing arguments \n" << R"(Usage: tasks change {number} "{task}")" ;
+                std::cerr << "Error: missing arguments \n" 
+                << R"(Usage: tasks change {number} "{task}")" ;
                 return 1;
             } else {
                 string temporary;
@@ -87,6 +95,11 @@ int main(int argc, const char* argv[])
                 }
 
                 int option{std::stoi(string(argv[2]))};
+                if (option - 1 <=-1 || option > content.size())
+                {
+                    std::cerr << "Error: cannot change an inexistent task" << '\n';
+                    return 1;
+                }
                 content[option-1] = string(argv[3]);
                 file.close();
 
