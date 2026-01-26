@@ -42,12 +42,16 @@ int main(int argc, const char *argv[])
 
         if (action == "add")
         {
-
             if (argc < 3)
             {
                 std::cerr << "Error: missing arguments \n"
-                          << R"(Usage: task add "{task description}")" << '\n';
+                          << R"(Usage: tasks add "{task description}")" << '\n';
                 return 1;
+            }
+            else if (string(argv[2]) == "--help")
+            {
+                cout << R"(Usage: tasks add "{task description}")" << '\n';
+                return 0;
             }
             else
             {
@@ -58,7 +62,6 @@ int main(int argc, const char *argv[])
         }
         else if (action == "remove")
         {
-
             if (argc < 3)
             {
                 std::cerr << "Error: missing arguments" << '\n'
@@ -79,6 +82,9 @@ int main(int argc, const char *argv[])
                     file.close();
                     std::fstream file(path, std::ios::out);
                     cout << "Successfully removed all the tasks" << '\n';
+                } else if(string(argv[2]) == "--help")
+                {
+                    cout << R"(Usage: tasks remove {number})" << '\n';
                 }
                 else
                 {
@@ -108,11 +114,22 @@ int main(int argc, const char *argv[])
         }
         else if (action == "change")
         {
+            if (argc <=2)
+            {
+                std::cerr << "Error: missing arguments \n"
+                          << R"(Usage: tasks change {number} "{task}")" << '\n';
+                return 1;
+            }
+            if (string(argv[2]) == "--help" && argc == 3)
+            {
+                cout << R"(Usage: tasks change {number} "{task}")" << '\n';
+                return 0;
+            }
 
             if (argc < 4)
             {
                 std::cerr << "Error: missing arguments \n"
-                          << R"(Usage: tasks change {number} "{task}")";
+                          << R"(Usage: tasks change {number} "{task}")" << '\n';
                 return 1;
             }
             else
@@ -156,6 +173,13 @@ int main(int argc, const char *argv[])
                 cout << taskPosition + 1 << ": " << temporary << '\n';
                 taskPosition++;
             }
+        } else if(action == "--help")
+        {
+            cout  << "use: tasks [COMMAND] [..OPTIONS] \n \n"
+                  << "add                     adds a new task to the task file \n"
+                  << "change                     changes the task to another \n"
+                  << "remove                     removes a task \n \n";
+            return 0;
         }
     }
     else
