@@ -27,7 +27,7 @@ Remove a task based on its number, the number appears in the list command.
 Usage:
 - `tasks remove 1`
 
-Remove can remove all the tasks just by using the flag --all.
+Remove can remove all the tasks just by using the flag --all or -a.
 
 Usage:
 - `tasks remove --all`
