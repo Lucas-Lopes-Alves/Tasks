@@ -1,3 +1,6 @@
 # executables
 bin/
 *.o
+*.cxx
+# vscode settings
+.vscode/

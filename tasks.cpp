@@ -17,7 +17,7 @@ int main(int argc, const char *argv[])
         if (!home)
         {
             home = std::getenv("USERPROFILE");
-            path = string(home) + "/tasks.txt";
+            path = string(home) + R"(\tasks.txt)";
         }
 
         if (home)
@@ -29,7 +29,7 @@ int main(int argc, const char *argv[])
             cout << "ERROR!";
             return 1;
         }
-
+        
         std::fstream file;
         if (std::filesystem::exists(path))
         {
@@ -42,7 +42,7 @@ int main(int argc, const char *argv[])
 
         if (action == "add")
         {
-            if (argc < 3)
+            if (argc <= 2)
             {
                 std::cerr << "Error: missing arguments \n"
                           << R"(Usage: tasks add "{task description}")" << '\n';
@@ -55,10 +55,17 @@ int main(int argc, const char *argv[])
             }
             else
             {
+                if (argc == 4 && string(argv[3]) == "--important" || argc == 4 && string(argv[3]) == "-i")
+                {
+                    string task = string(argv[2]);
+                    file << "*" << task << '\n';
+                    cout << "Successfully added a task" << '\n';
+                    return 0;
+                }
                 string task = string(argv[2]);
                 file << task << '\n';
+                cout << "Successfully added a task" << '\n';
             }
-            cout << "Successfully added a task" << '\n';
         }
         else if (action == "remove")
         {
@@ -70,7 +77,7 @@ int main(int argc, const char *argv[])
             }
             else
             {
-                if (string(argv[2]) == "--all")
+                if (string(argv[2]) == "--all" || string(argv[2]) == "-a")
                 {
 
                     content.clear();
@@ -97,7 +104,7 @@ int main(int argc, const char *argv[])
                     int taskPosition{std::stoi(string(argv[2]))};
                     if (taskPosition - 1 <= -1 || taskPosition > content.size())
                     {
-                        std::cerr << "Error: cannot change an inexistent task" << '\n';
+                        std::cerr << "Error: cannot remove an inexistent task" << '\n';
                         return 1;
                     }
                     content.erase(content.begin() + (taskPosition));
@@ -164,6 +171,22 @@ int main(int argc, const char *argv[])
         }
         else if (action == "list")
         {
+            if (argc >=3 && string(argv[2]) == "--important" || argc >= 3 && string(argv[2]) == "-i")
+            {
+                string temporary;
+                int taskPosition{};
+
+                while (std::getline(file, temporary))
+                {
+                    if (temporary.find("*") != string::npos)
+                    {
+                        temporary.erase(temporary.begin()+temporary.find("*"));
+                        cout << taskPosition + 1 << ": " << temporary << '\n';
+                        taskPosition++;
+                    } 
+                }
+                
+            }
 
             string temporary;
             int taskPosition{};
