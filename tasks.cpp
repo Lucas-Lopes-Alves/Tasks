@@ -107,7 +107,7 @@ int main(int argc, const char *argv[])
                         std::cerr << "Error: cannot remove an inexistent task" << '\n';
                         return 1;
                     }
-                    content.erase(content.begin() + (taskPosition));
+                    content.erase(content.begin() + (taskPosition-1));
                     file.close();
 
                     std::fstream file(path, std::ios::out);
