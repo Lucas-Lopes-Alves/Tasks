@@ -19,7 +19,7 @@ Usage:
 The --important or -i flag define the task as an priority task and appear with an * in the list command
 
 Usage:
-- `tasks add "[task] --important"` or `tasks add "[task] -i"`
+- `tasks add "[task]" --important` or `tasks add "[task]" -i`
 
 ### remove
 Remove a task based on its number, the number appears in the list command.
