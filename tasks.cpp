@@ -17,12 +17,12 @@ int main(int argc, const char *argv[])
         if (!home)
         {
             home = std::getenv("USERPROFILE");
-            path = string(home) + R"(\tasks.txt)";
+            path = string(home) + R"(\tasks.tks)";
         }
 
         if (home)
         {
-            path = string(home) + "/tasks.txt";
+            path = string(home) + "/tasks.tks";
         }
         else
         {
