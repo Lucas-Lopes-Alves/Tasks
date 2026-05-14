@@ -1,10 +1,12 @@
 #ifndef __ACTIONS__
 #define __ACTIONS__
 
-void config();
+#include <string>
+
+void config(int argcount, char* args[], std::string *action);
+int add();
+int remove();
+int change();
 void list();
-void add();
-void change();
-void remove();
 
 #endif
