@@ -2,16 +2,16 @@
 #include <string>
 #include <iostream>
 
-int main(int argc, const char *argv[])
+int main(int argc,const char *argv[])
 {
     if (argc > 1)
     {
         char*args[20];
-        for (int i = 1; i < argc; i++)
+        for (int i = 0; i < argc; i++)
         {
-            args[i-1] = const_cast<char *>(args[i]);
+            args[i] = const_cast<char *>(argv[i]);
         }
-        std::string action;
+        std::string action{};
         config(argc,args,&action);
 
         if (action == "add")
@@ -29,6 +29,7 @@ int main(int argc, const char *argv[])
         else if (action == "list")
         {
             list();
+            return 0;
         } else if(action == "--help")
         {
             std::cout  << "use: tasks [COMMAND] [..OPTIONS] \n \n"

@@ -12,7 +12,7 @@ const char *home{std::getenv("HOME")};
 string path;
 std::fstream file;
 int argc;
-char* argv[20]{};
+char* argv[20];
 
 void config(int argcount,char* args[], string *action)
 {
@@ -21,8 +21,7 @@ void config(int argcount,char* args[], string *action)
     {
         argv[i] = args[i];
     }
-    string temp = string(argv[1]);
-    *action = temp;
+    *action = string(argv[1]);
     if (!home)
     {
         home = std::getenv("USERPROFILE");
@@ -48,6 +47,7 @@ void config(int argcount,char* args[], string *action)
         file.open(path, std::ios::in | std::ios::out | std::ios::app);
     }
 }
+
 int add()
 {
     if (argc <= 2)
@@ -133,6 +133,7 @@ int remove()
         }
     }
 }
+
 int change()
 {
     if (argc <=2)
@@ -177,12 +178,15 @@ int change()
             file << vector << '\n';
         }
 
-        content.clear();
         cout << "Successfully changed "
                 << R"(")" << before << R"(" to ")"
                 << content[option - 1] << R"(")" << '\n';
+        
+        content.clear();
+        return 0;
     }
 }
+
 void list()
 {
     if (argc >=3 && string(argv[2]) == "--important" || argc >= 3 && string(argv[2]) == "-i")
