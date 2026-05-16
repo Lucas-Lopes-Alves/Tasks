@@ -3,7 +3,7 @@
 
 #include <string>
 
-void config(int argcount, char* args[], std::string *action);
+void config(int argcount,const char* args[], std::string *action);
 int add();
 int remove();
 int change();

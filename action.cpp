@@ -14,12 +14,12 @@ std::fstream file;
 int argc;
 char* argv[20];
 
-void config(int argcount,char* args[], string *action)
+void config(int argcount, const char* args[], string *action)
 {
     argc = argcount;
     for (int i = 0; i < argc;i++)
     {
-        argv[i] = args[i];
+        argv[i] = const_cast<char *>(args[i]);
     }
     *action = string(argv[1]);
     if (!home)

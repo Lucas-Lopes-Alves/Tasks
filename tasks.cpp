@@ -2,17 +2,12 @@
 #include <string>
 #include <iostream>
 
-int main(int argc,const char *argv[])
+int main(int argc, char *argv[])
 {
     if (argc > 1)
     {
-        char*args[20];
-        for (int i = 0; i < argc; i++)
-        {
-            args[i] = const_cast<char *>(argv[i]);
-        }
         std::string action{};
-        config(argc,args,&action);
+        config(argc,(const char**)argv,&action);
 
         if (action == "add")
         {
